@@ -3,6 +3,7 @@ import useFetchData from '../hooks/useFetchData'
 
 const Quiz = () => {
   const { questions, isLoading, fetchQuestions } = useFetchData()
+  const [index, setIndex] = useState(0)
   const [actualQuestion, setActualQuestion] = useState(null)
   const [answeredQustions, setAnsweredQuestions] = useState([])
 
@@ -18,7 +19,7 @@ const Quiz = () => {
   useEffect(() => {
     if (questions) {
       setActualQuestion({
-        ...questions[0],
+        ...questions[index],
         'user-answers': userAnswers
       })
     }
@@ -48,15 +49,15 @@ const Quiz = () => {
 
   const getNextQuestion = () => {
     setAnsweredQuestions([...answeredQustions, actualQuestion])
-    const index = questions.findIndex(question => question.id === actualQuestion.id)
     setActualQuestion({...questions[index + 1],  'user-answers': userAnswers})
+    setIndex(index + 1)
   }
 
   return (
     <div>
       {actualQuestion && (
         <div>
-          <p>{actualQuestion.question}</p>
+          <p>{index + 1}. {actualQuestion.question}</p>
           {Object.keys(actualQuestion.answers).map(
             (answerKey) =>
               actualQuestion.answers[answerKey] && (

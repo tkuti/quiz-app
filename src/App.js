@@ -1,10 +1,20 @@
 import './App.css'
-import Quiz from './components/Quiz'
+import Welcome from './pages/Welcome'
+import Quiz from './pages/Quiz'
+import { HashRouter, Route, Routes } from 'react-router-dom'
+import { GameOptionContextProvider } from './context/GameOptionsContext'
 
 function App() {
   return (
     <div className='App'>
-      <Quiz />
+      <GameOptionContextProvider>
+        <HashRouter>
+          <Routes>
+            <Route path='/' element={<Welcome />} />
+            <Route path='/quiz' element={<Quiz />} />
+          </Routes>
+        </HashRouter>
+      </GameOptionContextProvider>
     </div>
   )
 }

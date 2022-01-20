@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
+import { GameOptionContext } from '../context/GameOptionsContext'
 
 const useFetchData = () => {
   const [questions, setQuestions] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const {link} = useContext(GameOptionContext)
 
   useEffect(() => {
     fetchQuestions()
@@ -18,8 +20,9 @@ const useFetchData = () => {
     }
 
     try {
+      console.log(link)
       const response = await axios.get(
-        'https://quizapi.io/api/v1/questions?limit=10',
+        link,
         headers
       )
       console.log(response)
