@@ -3,37 +3,27 @@ import axios from 'axios'
 import { GameOptionContext } from '../context/GameOptionsContext'
 
 const useFetchData = () => {
-  const [questions, setQuestions] = useState(null)
+  const [data, setData] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const {link} = useContext(GameOptionContext)
 
   useEffect(() => {
-    fetchQuestions()
+    fetchData()
   }, [])
 
-  const fetchQuestions = async () => {
+  const fetchData = async () => {
     setIsLoading(true)
-    const headers = {
-      headers: {
-        'X-Api-Key': 'XtH70vAbXCwOlQt4ZpSzKMHeAQLfhqJ4jAz1tEOZ'
-      }
-    }
-
     try {
-      console.log(link)
-      const response = await axios.get(
-        link,
-        headers
-      )
+      const response = await axios.get(link)
       console.log(response)
-      setQuestions(response.data)
+      setData(response.data)
     } catch (error) {
       console.error(error)
     }
     setIsLoading(false)
   }
 
-  return { questions, isLoading, fetchQuestions }
+  return { data, isLoading, fetchData }
 }
 
 export default useFetchData

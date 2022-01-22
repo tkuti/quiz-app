@@ -1,85 +1,75 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import useFetchData from '../hooks/useFetchData'
+import { AnsweredQuestionsContext } from '../context/AnsweredQuestionsContext'
+import { useNavigate } from 'react-router-dom'
+import {shuffleArray} from '../helpers/helperFunctions'
+import HTMLComponent from '../components/HTMLComponent'
 
 const Quiz = () => {
-  const { questions, isLoading, fetchQuestions } = useFetchData()
+  const { data: questions, isLoading, fetchQuestions } = useFetchData()
   const [index, setIndex] = useState(0)
   const [actualQuestion, setActualQuestion] = useState(null)
-  const [answeredQustions, setAnsweredQuestions] = useState([])
+  const {dispatchAnsweredQuestion} = useContext(AnsweredQuestionsContext)
+  let navigate = useNavigate()
 
-  const userAnswers = {
-    answer_a: 'false',
-    answer_b: 'false',
-    answer_c: 'false',
-    answer_d: 'false',
-    answer_e: 'false',
-    answer_f: 'false'
-  }
 
   useEffect(() => {
+    console.log(questions);
     if (questions) {
+      const question = questions.results[index]
+      const unshuffledAnswers = [...question['incorrect_answers'], question['correct_answer']]
+      const answers = shuffleArray(unshuffledAnswers)
       setActualQuestion({
-        ...questions[index],
-        'user-answers': userAnswers
+        ...questions.results[index],
+        'user-answer': "",
+        answers
       })
     }
-  }, [questions])
+  }, [questions, index])
 
-  useEffect(() => {
-      if (actualQuestion) {
-          console.log(actualQuestion['user-answers'])
-      }
-  }, [actualQuestion])
 
   const handleAnswerChange = e => {
-    const answersByUser = {...userAnswers}
-    if (e.target.type === 'radio') {
-        answersByUser[e.target.value] = 'true'
-      setActualQuestion({ ...actualQuestion, 'user-answers': answersByUser })
-    } else {
-      setActualQuestion({
-        ...actualQuestion,
-        'user-answers': {
-          ...actualQuestion['user-answers'],
-          [e.target.value]: e.target.checked ? 'true' : 'false'
-        }
-      })
-    }
+    setActualQuestion({ ...actualQuestion, 'user-answer': e.target.value })
   }
 
-  const getNextQuestion = () => {
-    setAnsweredQuestions([...answeredQustions, actualQuestion])
-    setActualQuestion({...questions[index + 1],  'user-answers': userAnswers})
-    setIndex(index + 1)
+  const saveAnswer = () => {
+    dispatchAnsweredQuestion({type: 'ADD', payload: actualQuestion})
+    isQuizOver()
+  }
+
+  const isQuizOver = () => {
+    if (index < questions.results.length - 1) {
+      setIndex(index + 1)
+    } else {
+      navigate('/quiz-result')
+    }
   }
 
   return (
     <div>
       {actualQuestion && (
         <div>
-          <p>{index + 1}. {actualQuestion.question}</p>
-          {Object.keys(actualQuestion.answers).map(
-            (answerKey) =>
-              actualQuestion.answers[answerKey] && (
-                <div key={answerKey + actualQuestion.id}>
+          <span>{index + 1}. </span>
+          <HTMLComponent string={actualQuestion.question}/>
+           {actualQuestion.answers.map(
+            answer =>
+                <div key={answer + actualQuestion.question}>
                   <input
-                    type={
-                      actualQuestion['multiple_correct_answers'] === 'true'
-                        ? 'checkbox'
-                        : 'radio'
-                    }
-                    id={answerKey + actualQuestion.id}
-                    name={actualQuestion.id}
-                    value={answerKey}
+                    type='radio'
+                    id={answer + actualQuestion.question}
+                    name={actualQuestion.question}
+                    value={answer}
                     onChange={handleAnswerChange}
                   />
-                  <label htmlFor={answerKey + actualQuestion.id}>
-                    {actualQuestion.answers[answerKey]}
+                  <label htmlFor={answer + actualQuestion.question}>
+                    {answer}
                   </label>
                 </div>
               )
-          )}
-          <button onClick={getNextQuestion}>Next</button>
+          } 
+          <button onClick={saveAnswer}>
+            {index < questions.length - 1 ? 'Next' : 'Send'}
+          </button>
         </div>
       )}
     </div>
