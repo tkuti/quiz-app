@@ -1,9 +1,23 @@
 $blue: #292CB9;
 $pink: #B90BA8;
 $yellow: #EDC800;
-$red: #a31010;
-$green: #126612;
+$red: #880808;
+$green: #186A3B;
+
+@font-face {
+    font-family: 'Body';
+    src: url('../../../public/font/Ge\ Body.ttf');
+  }
+@font-face {
+    font-family: 'Roboto';
+    src: url('../../../public/font/Roboto-Medium.ttf');
+  }
 
 html {
     font-size: 14px;
+    font-family: 'Roboto';
+}
+
+button {
+    font-family: 'Body';
 }

@@ -7,6 +7,12 @@
             max-width: 100%;
             height: auto;
         }
+        .welcome {
+            font-size: 2rem;
+            font-family: 'Body';
+            font-weight: 600;
+            padding: .5rem 0;
+        }
     }
     .game-options {
         @include flex(column, center, center);

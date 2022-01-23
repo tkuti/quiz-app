@@ -46,11 +46,11 @@ const Home = () => {
     <div className='home'>
       <header className='header'>
         <img src={quizImage} alt="quiz-time" />
-        <h2>Welcome Stranger!</h2>
+        <p className='welcome'>Welcome Quizer!</p>
         <p>Are you ready for a quiz?</p>
         <p>Pick category and difficulty and start right now.</p>
       </header>
-      <div className='game-options'>
+      <section className='game-options'>
         <div className='category-options select-wrapper'>
           <label htmlFor='select-categories'>Category: </label>
           <select
@@ -83,7 +83,7 @@ const Home = () => {
         <button className='rainbow-button'
         value='Start quiz'
         onClick={startQuiz}></button>
-      </div>
+      </section>
     </div>
   )
 }
