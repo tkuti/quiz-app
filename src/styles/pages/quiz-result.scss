@@ -1,0 +1,50 @@
+.quiz-result {
+  @include flex(column, center, center);
+  .result-info {
+    font-size: 1.8rem;
+    font-weight: 600;
+    padding-top: 1rem;
+    span {
+      color: $blue;
+    }
+  }
+  .buttons {
+    @include flex(row, center, center);
+  }
+  .question-wrapper {
+    border-radius: 8px;
+    .seq,
+    .question {
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .answer {
+      @include flex(row, flex-start, center);
+      padding: 0.3rem;
+      margin: 0.2rem;
+      font-weight: 500;
+      .icon {
+        @include flex(row, center, center);
+        font-size: 2rem;
+        padding-left: .5rem;
+        &.correct {
+          color: $green;
+        }
+        &.incorrect {
+          color: $red;
+        }
+      }
+    }
+    &.correct {
+      border: 2px solid $green;
+      margin: 10px;
+      background-color: rgba($green, .3);
+    }
+    &.incorrect {
+      border: 2px solid $red;
+      margin: 10px;
+      background-color: rgba($red, .3);
+    }
+  }
+}

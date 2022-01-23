@@ -1,0 +1,58 @@
+[type="radio"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  @include flex(row, center, center);
+  outline: none;
+
+  &:after {
+    @include pseudo(white);
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid rgba(gray, 0.4);
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    height: 0.8rem;
+    width: 0.8rem;
+    border-radius: 50%;
+    background-color: $pink;
+    cursor: pointer;
+    visibility: hidden;
+    opacity: 0;
+
+    @include scale(0);
+  }
+
+  &:disabled:before {
+    background-color: gray;
+  }
+
+  &:hover{
+
+    &:after{
+      border: 2px solid $pink;
+    }
+  }
+
+  &:disabled:hover{
+
+    &:after{
+      border: 2px solid rgba(gray, 0.4);
+    }
+  }
+
+  &:checked,
+  &.checked {
+    &:before {
+      @include scale(1);
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+

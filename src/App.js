@@ -1,25 +1,22 @@
-import './App.css'
-import Welcome from './pages/Welcome'
+import './styles/main.scss'
+import Home from './pages/Home'
 import Quiz from './pages/Quiz'
 import QuizResult from './pages/QuizResult'
 import { HashRouter, Route, Routes } from 'react-router-dom'
-import { GameOptionContextProvider } from './context/GameOptionsContext'
-import { AnsweredQuestionsContextProvider } from './context/AnsweredQuestionsContext'
+import { QuizContextProvider } from './context/QuizContext'
 
 function App() {
   return (
     <div className='App'>
-      <GameOptionContextProvider>
-        <AnsweredQuestionsContextProvider>
-          <HashRouter>
-            <Routes>
-              <Route path='/' element={<Welcome />} />
-              <Route path='/quiz' element={<Quiz />} />
-              <Route path='/quiz-result' element={<QuizResult />} />
-            </Routes>
-          </HashRouter>
-        </AnsweredQuestionsContextProvider>
-      </GameOptionContextProvider>
+      <QuizContextProvider>
+            <HashRouter>
+              <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/quiz' element={<Quiz />} />
+                <Route path='/quiz-result' element={<QuizResult />} />
+              </Routes>
+            </HashRouter>
+      </QuizContextProvider>
     </div>
   )
 }

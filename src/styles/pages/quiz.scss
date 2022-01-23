@@ -1,0 +1,46 @@
+.quiz {
+    @include flex(row, center, center);
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0; 
+        left: 0;
+        width: 100%; 
+        height: 100%;
+        background-image: url('../../images/quiz-bg.jpg');
+        background-size: cover;
+        filter: blur(10px);
+        z-index: -1;
+    }
+    .quiz-container {
+        min-width: 60%;
+        min-height: 60vh;
+        background: rgba(white, .9);
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+        margin: 1rem;
+        padding: 1rem;
+        @include flex(column, flex-start, center);
+        .seq, .question {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .seq {
+            color: $pink;
+        }
+        .question {
+            text-align: center;
+            padding: .5rem;
+            color: $blue;
+        }
+        .answer {
+            @include flex(row, flex-start, center);
+            padding: .3rem;
+            margin: .2rem;
+            font-weight: 500;
+        }
+    }
+}

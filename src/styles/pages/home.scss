@@ -1,0 +1,17 @@
+.home {
+    text-align: center;
+    @include flex(column, center, center);
+    .header {
+        padding: .3rem;
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+    .game-options {
+        @include flex(column, center, center);
+        .select-wrapper {
+            margin: .8rem .5rem .5rem;
+        }
+    }
+}

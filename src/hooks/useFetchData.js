@@ -1,21 +1,21 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { GameOptionContext } from '../context/GameOptionsContext'
 
-const useFetchData = () => {
+
+const useFetchData = (link) => {
   const [data, setData] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
-  const {link} = useContext(GameOptionContext)
+
 
   useEffect(() => {
     fetchData()
   }, [])
 
+
   const fetchData = async () => {
     setIsLoading(true)
     try {
       const response = await axios.get(link)
-      console.log(response)
       setData(response.data)
     } catch (error) {
       console.error(error)
@@ -23,7 +23,7 @@ const useFetchData = () => {
     setIsLoading(false)
   }
 
-  return { data, isLoading, fetchData }
+  return { data, isLoading }
 }
 
 export default useFetchData

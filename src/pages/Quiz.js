@@ -1,39 +1,43 @@
 import React, { useState, useEffect, useContext } from 'react'
 import useFetchData from '../hooks/useFetchData'
-import { AnsweredQuestionsContext } from '../context/AnsweredQuestionsContext'
+import { QuizContext } from '../context/QuizContext'
 import { useNavigate } from 'react-router-dom'
-import {shuffleArray} from '../helpers/helperFunctions'
+import { shuffleArray } from '../helpers/helperFunctions'
 import HTMLComponent from '../components/HTMLComponent'
 
 const Quiz = () => {
-  const { data: questions, isLoading, fetchQuestions } = useFetchData()
+  const { link, dispatchAnsweredQuestion } = useContext(QuizContext)
+  const { data: questions, isLoading } = useFetchData(link)
   const [index, setIndex] = useState(0)
   const [actualQuestion, setActualQuestion] = useState(null)
-  const {dispatchAnsweredQuestion} = useContext(AnsweredQuestionsContext)
   let navigate = useNavigate()
 
+  useEffect(() => {
+    dispatchAnsweredQuestion({ type: 'CLEAR' })
+  }, [])
 
   useEffect(() => {
-    console.log(questions);
     if (questions) {
       const question = questions.results[index]
-      const unshuffledAnswers = [...question['incorrect_answers'], question['correct_answer']]
+      const unshuffledAnswers = [
+        ...question['incorrect_answers'],
+        question['correct_answer']
+      ]
       const answers = shuffleArray(unshuffledAnswers)
       setActualQuestion({
         ...questions.results[index],
-        'user-answer': "",
+        'user-answer': '',
         answers
       })
     }
   }, [questions, index])
-
 
   const handleAnswerChange = e => {
     setActualQuestion({ ...actualQuestion, 'user-answer': e.target.value })
   }
 
   const saveAnswer = () => {
-    dispatchAnsweredQuestion({type: 'ADD', payload: actualQuestion})
+    dispatchAnsweredQuestion({ type: 'ADD', payload: actualQuestion })
     isQuizOver()
   }
 
@@ -46,30 +50,35 @@ const Quiz = () => {
   }
 
   return (
-    <div>
+    <div className='quiz'>
       {actualQuestion && (
-        <div>
-          <span>{index + 1}. </span>
-          <HTMLComponent string={actualQuestion.question}/>
-           {actualQuestion.answers.map(
-            answer =>
-                <div key={answer + actualQuestion.question}>
-                  <input
-                    type='radio'
-                    id={answer + actualQuestion.question}
-                    name={actualQuestion.question}
-                    value={answer}
-                    onChange={handleAnswerChange}
-                  />
-                  <label htmlFor={answer + actualQuestion.question}>
-                    {answer}
-                  </label>
-                </div>
-              )
-          } 
-          <button onClick={saveAnswer}>
-            {index < questions.length - 1 ? 'Next' : 'Send'}
-          </button>
+        <div className='quiz-container'>
+          <span className='seq'>{index + 1}. </span>
+          <div className='question'>
+            <HTMLComponent string={actualQuestion.question} />
+          </div>
+          <div className='answers'>
+            {actualQuestion.answers.map(answer => (
+              <div key={answer + actualQuestion.question} className='answer'>
+                <input
+                  type='radio'
+                  id={answer + actualQuestion.question}
+                  name={actualQuestion.question}
+                  value={answer}
+                  onChange={handleAnswerChange}
+                />
+                <label htmlFor={answer + actualQuestion.question}>
+                  <HTMLComponent string={answer} />
+                </label>
+              </div>
+            ))}
+          </div>
+          <button
+            className='rainbow-button'
+            value={index < questions.results.length - 1 ? 'Next' : 'Send'}
+            disabled={actualQuestion['user-answer'] ? false : true}
+            onClick={saveAnswer}
+          ></button>
         </div>
       )}
     </div>
