@@ -3,10 +3,15 @@ import { QuizContext } from '../context/QuizContext'
 import { useNavigate } from 'react-router-dom'
 import useFetchData from '../hooks/useFetchData'
 import quizImage from '../images/quiz-header.jpg'
+import triviaLogo from '../images/trivia.png'
+import { IoLogoGithub } from 'react-icons/io'
+
 
 const Home = () => {
-  const { setLink,gameOptions, setGameOptions } = useContext(QuizContext)
-  const { data: categories } = useFetchData('https://opentdb.com/api_category.php')
+  const { setLink, gameOptions, setGameOptions } = useContext(QuizContext)
+  const { data: categories } = useFetchData(
+    'https://opentdb.com/api_category.php'
+  )
   let navigate = useNavigate()
 
   useEffect(() => {
@@ -52,7 +57,7 @@ const Home = () => {
   return (
     <div className='home'>
       <header className='header'>
-        <img src={quizImage} alt="quiz-time" />
+        <img src={quizImage} alt='quiz-time' />
         <p className='welcome'>Welcome Quizer!</p>
         <p>Are you ready for a quiz?</p>
         <p>Pick category and difficulty and start right now.</p>
@@ -87,15 +92,32 @@ const Home = () => {
             <option value='hard'>Hard</option>
           </select>
         </div>
-        <button className='rainbow-button'
-        value='Start quiz'
-        onClick={startQuiz}></button>
         <button
-        className='rainbow-button'
-        value='My results'
-        onClick={() => navigate('/my-results')}
+          className='rainbow-button'
+          value='Start quiz'
+          onClick={startQuiz}
+        ></button>
+        <button
+          className='rainbow-button'
+          value='My results'
+          onClick={() => navigate('/my-results')}
         ></button>
       </section>
+      <footer className='footer'>
+        <div className='info data'>
+          <p>Data from:</p>
+          <a href='https://opentdb.com/api_config.php'>
+            <img src={triviaLogo} alt='trivia-logo' />
+          </a>
+        </div>
+        <div className='info made'>
+          <p>Made by: </p>
+          <a href='https://github.com/tkuti'>
+            <IoLogoGithub />
+            Tunde Kuti
+          </a>
+          </div>
+      </footer>
     </div>
   )
 }
