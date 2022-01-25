@@ -1,19 +1,20 @@
 {
   "files": {
-    "main.css": "/quiz-app/static/css/main.dc650e10.css",
-    "main.js": "/quiz-app/static/js/main.9d8a5e54.js",
+    "main.css": "/quiz-app/static/css/main.40b84751.css",
+    "main.js": "/quiz-app/static/js/main.e107abc6.js",
     "static/js/787.a39f1fa9.chunk.js": "/quiz-app/static/js/787.a39f1fa9.chunk.js",
     "static/media/Ge Body.ttf": "/quiz-app/static/media/Ge Body.2b0191d8f1253dcd0850.ttf",
     "static/media/Roboto-Medium.ttf": "/quiz-app/static/media/Roboto-Medium.d2d7f0c01bffaa5ec8f7.ttf",
     "static/media/quiz-bg.jpg": "/quiz-app/static/media/quiz-bg.9048df4d63ebe871f3f9.jpg",
     "static/media/quiz-header.jpg": "/quiz-app/static/media/quiz-header.4521d5558d41920d8fe6.jpg",
+    "static/media/trivia.png": "/quiz-app/static/media/trivia.16e3ec8a63cef267f13c.png",
     "index.html": "/quiz-app/index.html",
-    "main.dc650e10.css.map": "/quiz-app/static/css/main.dc650e10.css.map",
-    "main.9d8a5e54.js.map": "/quiz-app/static/js/main.9d8a5e54.js.map",
+    "main.40b84751.css.map": "/quiz-app/static/css/main.40b84751.css.map",
+    "main.e107abc6.js.map": "/quiz-app/static/js/main.e107abc6.js.map",
     "787.a39f1fa9.chunk.js.map": "/quiz-app/static/js/787.a39f1fa9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.dc650e10.css",
-    "static/js/main.9d8a5e54.js"
+    "static/css/main.40b84751.css",
+    "static/js/main.e107abc6.js"
   ]
 }
