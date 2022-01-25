@@ -1,0 +1,24 @@
+.timer {
+  font-size: 3rem;
+  font-weight: 600;
+  text-shadow: 0 3px 5px black;
+  animation-name: colorChange;
+  animation-iteration-count: infinite;
+  animation-duration: 61s;
+  padding-left: .5rem;
+}
+
+@keyframes colorChange {
+  0% {
+    color: $yellow;
+  }
+  50% {
+    color: $green;
+  }
+  75% {
+    color: $blue;
+  }
+  100% {
+    color: $red;
+  }
+}

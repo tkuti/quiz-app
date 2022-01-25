@@ -1,0 +1,26 @@
+.my-results {
+    @include flex(column, flex-start, center);
+    min-height: 100vh;
+    position: relative;
+    background-color: rgba(white, .8);
+    &::before {
+        @include background();
+    }
+    font-family: "Body";
+    .info-wrapper {
+        text-align: center;
+        padding: 1rem;
+        .result-info {
+            font-size: 1.2rem;
+            padding: .3rem;
+            span {
+                color: $pink;
+                font-weight: 600;
+            }
+        }
+    }
+    .diagram-wrapper {
+        padding-top: 1rem;
+        text-align: center;
+    }
+}

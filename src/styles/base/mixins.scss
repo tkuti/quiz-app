@@ -1,18 +1,31 @@
-@mixin flex ($direction, $justify, $align) {
-    display: flex;
-    flex-direction: $direction;
-    justify-content: $justify;
-    align-items: $align;
+@mixin flex($direction, $justify, $align) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin background() {
+  content: "";
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;
+  background-image: url('../../images/quiz-bg.jpg');
+  background-size: cover;
+  filter: blur(10px);
+  z-index: -1;
 }
 
 @mixin pseudo($bg-color) {
-    display: block;
-    background-color: $bg-color;
-    content: '';
-  }
-  
-  @mixin scale($scaleRate) {
-    -ms-transform: scale($scaleRate, $scaleRate); /* IE 9 */
-    -webkit-transform: scale($scaleRate, $scaleRate); /* Safari */
-    transform: scale($scaleRate, $scaleRate);
-  }
+  display: block;
+  background-color: $bg-color;
+  content: '';
+}
+
+@mixin scale($scaleRate) {
+  -ms-transform: scale($scaleRate, $scaleRate); /* IE 9 */
+  -webkit-transform: scale($scaleRate, $scaleRate); /* Safari */
+  transform: scale($scaleRate, $scaleRate);
+}

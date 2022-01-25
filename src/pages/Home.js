@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { QuizContext } from '../context/QuizContext'
 import { useNavigate } from 'react-router-dom'
 import useFetchData from '../hooks/useFetchData'
@@ -9,6 +9,13 @@ const Home = () => {
   const { data: categories } = useFetchData('https://opentdb.com/api_category.php')
   let navigate = useNavigate()
 
+  useEffect(() => {
+    setGameOptions({
+      difficulty: 'random',
+      category: '0',
+      categoryName: 'Random'
+    })
+  }, [])
 
   const handleOptionChange = e => {
     if (e.target.name === 'category') {
@@ -83,6 +90,11 @@ const Home = () => {
         <button className='rainbow-button'
         value='Start quiz'
         onClick={startQuiz}></button>
+        <button
+        className='rainbow-button'
+        value='My results'
+        onClick={() => navigate('/my-results')}
+        ></button>
       </section>
     </div>
   )

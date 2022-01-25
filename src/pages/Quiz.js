@@ -4,9 +4,11 @@ import { QuizContext } from '../context/QuizContext'
 import { useNavigate } from 'react-router-dom'
 import { shuffleArray } from '../helpers/helperFunctions'
 import HTMLComponent from '../components/HTMLComponent'
+import Timer from '../components/Timer'
 
 const Quiz = () => {
-  const { link, dispatchAnsweredQuestion } = useContext(QuizContext)
+  const { link, dispatchAnsweredQuestion, setQuizOver } =
+    useContext(QuizContext)
   const { data: questions, isLoading } = useFetchData(link)
   const [index, setIndex] = useState(0)
   const [actualQuestion, setActualQuestion] = useState(null)
@@ -14,6 +16,9 @@ const Quiz = () => {
 
   useEffect(() => {
     dispatchAnsweredQuestion({ type: 'CLEAR' })
+    if (!link) {
+      navigate('/')
+    }
   }, [])
 
   useEffect(() => {
@@ -38,21 +43,36 @@ const Quiz = () => {
 
   const saveAnswer = () => {
     dispatchAnsweredQuestion({ type: 'ADD', payload: actualQuestion })
-    isQuizOver()
-  }
-
-  const isQuizOver = () => {
     if (index < questions.results.length - 1) {
       setIndex(index + 1)
     } else {
-      navigate('/quiz-result')
+      quizOver()
     }
+  }
+
+
+  const quizOver = () => {
+    setQuizOver(true)
+    navigate('/quiz-result')
   }
 
   return (
     <div className='quiz'>
+      <div className='info-container card'>
+        <div className='info-question'>
+          <p>
+            Category:
+            <span>{actualQuestion && actualQuestion.category}</span>
+          </p>
+          <p>
+            Difficulty:
+            <span>{actualQuestion && actualQuestion.difficulty}</span>
+          </p>
+        </div>
+        <Timer quizOver={quizOver} />
+      </div>
       {actualQuestion && (
-        <div className='quiz-container'>
+        <div className='quiz-container card'>
           <span className='seq'>{index + 1}. </span>
           <div className='question'>
             <HTMLComponent string={actualQuestion.question} />

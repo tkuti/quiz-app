@@ -1,5 +1,11 @@
 .quiz-result {
   @include flex(column, center, center);
+  min-height: 100vh;
+  position: relative;
+  background-color: rgba(white, .8);
+  &::before {
+    @include background();
+  }
   .result-info {
     font-size: 1.8rem;
     font-weight: 600;
@@ -13,6 +19,7 @@
   }
   .question-wrapper {
     border-radius: 8px;
+    padding: 0.3rem;
     .seq,
     .question {
       text-align: center;
@@ -27,7 +34,7 @@
       .icon {
         @include flex(row, center, center);
         font-size: 2rem;
-        padding-left: .5rem;
+        padding-left: 0.5rem;
         &.correct {
           color: $green;
         }
@@ -39,12 +46,12 @@
     &.correct {
       border: 2px solid $green;
       margin: 10px;
-      background-color: rgba($green, .1);
+      background-color: rgba($green, 0.4);
     }
     &.incorrect {
       border: 2px solid $red;
       margin: 10px;
-      background-color: rgba($red, .1);
+      background-color: rgba($red, 0.4);
     }
   }
 }

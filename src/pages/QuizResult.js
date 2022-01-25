@@ -1,16 +1,16 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { QuizContext } from '../context/QuizContext'
 import HTMLComponent from '../components/HTMLComponent'
 import { MdClose, MdDone } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react/cjs/react.development'
 
 const QuizResult = () => {
   const {
     answeredQuestions,
     dispatchAnsweredQuestion,
     actualResult,
-    setActualResult
+    setActualResult,
+    setQuizOver
   } = useContext(QuizContext)
   let navigate = useNavigate()
 
@@ -21,6 +21,7 @@ const QuizResult = () => {
   const resetQuiz = target => {
     dispatchAnsweredQuestion({ type: 'CLEAR' })
     setActualResult(null)
+    setQuizOver(false)
     navigate(target)
   }
 

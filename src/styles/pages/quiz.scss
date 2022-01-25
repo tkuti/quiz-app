@@ -1,31 +1,33 @@
 .quiz {
-    @include flex(row, center, center);
+    @include flex(column, flex-start, center);
     width: 100%;
     min-height: 100vh;
     position: relative;
     &::before {
-        content: "";
-        position: absolute;
-        top: 0; 
-        left: 0;
-        width: 100%; 
-        height: 100%;
-        background-image: url('../../images/quiz-bg.jpg');
-        background-size: cover;
-        filter: blur(10px);
-        z-index: -1;
+        @include background();
     }
-    .quiz-container {
+    .card {
         min-width: 60%;
-        min-height: 60vh;
-        background: rgba(white, .9);
+        background: rgba(white, .85);
         border-radius: 8px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
         margin: 1rem;
         padding: 1rem;
+    }
+    .info-container {
+        @include flex(row, space-between, center);
+        font-weight: 600;
+        color: $pink;
+        span {
+            color: black;
+            padding-left: .5rem;
+        }
+    }
+    .quiz-container {
+        min-height: 60vh;
         @include flex(column, flex-start, center);
         .seq, .question {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 600;
         }
         .seq {

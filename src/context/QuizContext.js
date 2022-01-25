@@ -26,38 +26,53 @@ export const QuizContextProvider = props => {
     },
     JSON.parse(localStorage.getItem('answers')) || []
   )
+  const [quizOver, setQuizOver] = useState(false)
+
 
   useEffect(() => {
     localStorage.setItem('link', link)
   }, [link])
 
+
   useEffect(() => {
-    localStorage.setItem('answers', JSON.stringify(answeredQuestions))
-    if (answeredQuestions.length === 10) {
-      const userResult = answeredQuestions.reduce(
-        (total, question) =>
-          question['user-answer'] === question['correct_answer']
-            ? total + 1
-            : total,
-        0
-      )
-      setActualResult({
-        result: userResult * 10,
-        category: gameOptions.categoryName,
-        difficulty: gameOptions.difficulty
-      })
+    if (answeredQuestions.length > 0) {
+      localStorage.setItem('answers', JSON.stringify(answeredQuestions))
     }
   }, [answeredQuestions])
 
+
+  useEffect(() => {
+    if (quizOver) {
+      saveResult()
+    }
+  }, [quizOver])
+
+
   useEffect(() => {
     if (actualResult) {
-      setSavedResults([...savedResults, actualResult])
+      const newSavedResults = [...savedResults, actualResult]
+      setSavedResults(newSavedResults)
+      localStorage.setItem('results', JSON.stringify(newSavedResults))
     }
   }, [actualResult])
 
-  useEffect(() => {
-    localStorage.setItem('results', JSON.stringify(savedResults))
-  }, [savedResults])
+
+  const saveResult = () => {
+    const userResult = answeredQuestions.reduce(
+      (total, question) =>
+        question['user-answer'] === question['correct_answer']
+          ? total + 1
+          : total,
+      0
+    )
+    setActualResult({
+      result: userResult * 10,
+      category: gameOptions.categoryName,
+      difficulty: gameOptions.difficulty
+    })
+    
+  }
+
 
   return (
     <QuizContext.Provider
@@ -69,7 +84,9 @@ export const QuizContextProvider = props => {
         answeredQuestions,
         dispatchAnsweredQuestion,
         actualResult,
-        setActualResult
+        setActualResult,
+        savedResults,
+        setQuizOver
       }}
     >
       {props.children}
